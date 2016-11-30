@@ -15,8 +15,8 @@ var gulp = require('gulp'),
 
 gulp.task("concatJS", function () {
     return gulp.src([
-        'Scripts/main.js',
-        'Scripts/double.js'
+        'wwwroot/js/main.js',
+        'wwwroot/js/site.js'
     ])
         .pipe(maps.init())
         .pipe(concat('app.js'))
@@ -25,14 +25,14 @@ gulp.task("concatJS", function () {
 });
 
 gulp.task("minifyJS", ['concatJS'], function () {
-    return gulp.src("Scripts/app.js")
+    return gulp.src("wwwroot/js/app.js")
     .pipe(uglify())
     .pipe(rename('app.min.js'))
     .pipe(gulp.dest('Scripts'));
 });
 
 gulp.task("jsHint", function () {
-    return gulp.src('Scripts/main.js')
+    return gulp.src('wwwroot/js/*.js')
     .pipe(jshint())
 	.pipe(jshint.reporter('jshint-stylish', { verbose: true }));
 });
@@ -40,9 +40,14 @@ gulp.task("jsHint", function () {
 //combine both Concat and Minify
 gulp.task("jscript", function () {
 
-    return gulp.src('Scripts')
+    return gulp.src('wwwroot/js/*.js')
+            .pipe(concat("app.js"))
+            .pipe(gulp.dest('wwwroot/js'))
+            .pipe(rename('app.min.js'))
+            .pipe(uglify())
+            .pipe(gulp.dest('wwwroot/js'))
 
 });
 
-gulp.task("default", ["minifyJS"], function () {
+gulp.task("default", ["jscript"], function () {
 });
