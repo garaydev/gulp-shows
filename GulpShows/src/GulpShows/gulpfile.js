@@ -37,5 +37,12 @@ gulp.task("jsHint", function () {
 	.pipe(jshint.reporter('jshint-stylish', { verbose: true }));
 });
 
+//combine both Concat and Minify
+gulp.task("jscript", function () {
+
+    return gulp.src('Scripts')
+
+});
+
 gulp.task("default", ["minifyJS"], function () {
 });
