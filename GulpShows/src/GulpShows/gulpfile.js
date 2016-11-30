@@ -11,7 +11,8 @@ var gulp = require('gulp'),
       uglify = require('gulp-uglify'),
       rename = require('gulp-rename'),
       maps = require('gulp-sourcemaps'),
-	  jshint = require('gulp-jshint');
+	  jshint = require('gulp-jshint'),
+      watch = require('gulp-watch');
 
 gulp.task("concatJS", function () {
     return gulp.src([
@@ -33,6 +34,7 @@ gulp.task("minifyJS", ['concatJS'], function () {
 
 gulp.task("jsHint", function () {
     return gulp.src('wwwroot/js/*.js')
+    .pipe(watch())
     .pipe(jshint())
 	.pipe(jshint.reporter('jshint-stylish', { verbose: true }));
 });
